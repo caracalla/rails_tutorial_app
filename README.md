@@ -2,4 +2,4 @@
 
 This is my own take on the sample application from the [*Ruby on Rails Tutorial*](http://railstutorial.org/) by [Michael Hartl](http://michaelhartl.com/).
 
-post-gres-cue-ell
+There will be much more to come shortly!
