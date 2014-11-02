@@ -34,11 +34,20 @@ describe "UserPages" do
   			fill_in "Email", with: "test@user.com"
   			fill_in "Password", with: "fdasfdas"
   			fill_in "Confirm Password", with: "fdasfdas"
-  		end
+      end
 
   		it "should create a user" do
   			expect { click_button submit }.to change(User, :count).by(1)
   		end
+
+      describe "after saving the user" do
+        before { click_button submit }
+        let(:user) { User.find_by(email: "test@user.com") }
+
+        it { should have_link("Sign Out") }
+        it { should have_title(user.name) }
+        it { should have_selector('div.alert.alert-success', text: "Welcome") }
+      end
   	end
   end
 end
