@@ -32,6 +32,7 @@ describe "UserPages" do
       describe "as an admin user" do
         let(:admin) { FactoryGirl.create(:admin) }
         before do
+          click_link("Sign Out")
           valid_signin admin
           visit users_path
         end
@@ -56,10 +57,18 @@ describe "UserPages" do
 
   describe "profile page" do
   	let(:user) { FactoryGirl.create(:user) }
+    let!(:m1) { FactoryGirl.create(:micropost, user: user, content: "stupid") }
+    let!(:m2) { FactoryGirl.create(:micropost, user: user, content: "junk") }
   	before { visit user_path(user) }
 
   	it { should have_content(user.name) }
   	it { should have_title(user.name) }
+
+    describe "microposts" do
+      it { should have_content(m1.content) }
+      it { should have_content(m2.content) }
+      it { should have_content(user.microposts.count) }
+    end
   end
 
   describe "signing up" do

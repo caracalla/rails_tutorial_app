@@ -9,6 +9,23 @@ describe "StaticPages" do
 		it { should have_content('Sample App') }
 		it { should have_title(full_title('')) }
 		it { should_not have_title(' | Home') }
+
+		describe "for signed-in users" do
+			let(:user) { FactoryGirl.create(:user) }
+
+			before do
+				FactoryGirl.create(:micropost, user: user, content: "stupid crap")
+				FactoryGirl.create(:micropost, user: user, content: "lame junk")
+				valid_signin user
+				visit root_path
+			end
+
+			it "should render the user's feed" do
+				user.feed.each do |item|
+					expect(page).to have_selector("li##{item.id}", text: item.content)
+				end
+			end
+		end
 	end
 
 	describe "Help page" do
