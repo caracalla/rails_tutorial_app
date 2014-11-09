@@ -15,3 +15,8 @@
 //= require turbolinks
 //= require_tree .
 //= require bootstrap
+
+function counter(text, output, maxlength) {
+	var output = document.getElementById(output);
+	output.innerHTML = 255 - text.value.length
+}
